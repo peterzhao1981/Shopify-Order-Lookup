@@ -2,6 +2,7 @@ package com.whatsmode.custservice.shopify.util;
 
 import java.net.URI;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;

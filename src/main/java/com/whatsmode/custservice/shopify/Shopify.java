@@ -6,6 +6,7 @@ import com.whatsmode.custservice.shopify.common.Constants;
 import com.whatsmode.custservice.shopify.config.Configuration;
 import com.whatsmode.custservice.shopify.customer.response.CustomerList;
 import com.whatsmode.custservice.shopify.customer.template.CustomerTemplate;
+import com.whatsmode.custservice.shopify.event.template.EventTemplate;
 import com.whatsmode.custservice.shopify.order.response.OrderList;
 import com.whatsmode.custservice.shopify.order.template.OrderTemplate;
 import com.whatsmode.custservice.shopify.util.Http;
@@ -52,6 +53,10 @@ public class Shopify {
 
     public CustomerTemplate customerTemplate() {
         return new CustomerTemplate(http);
+    }
+
+    public EventTemplate eventTemplate() {
+        return new EventTemplate(http);
     }
 
     public static void main(String[] args) {

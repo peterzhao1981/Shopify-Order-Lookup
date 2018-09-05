@@ -12,12 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.whatsmode.custservice.shopify.Shopify;
-import com.whatsmode.custservice.shopify.customer.response.Customer;
 import com.whatsmode.custservice.shopify.customer.response.CustomerList;
-import com.whatsmode.custservice.shopify.customer.template.CustomerTemplate;
+import com.whatsmode.custservice.shopify.event.response.Event;
 import com.whatsmode.custservice.shopify.order.response.Order;
-import com.whatsmode.custservice.shopify.order.response.OrderList;
-import com.whatsmode.custservice.shopify.order.template.OrderTemplate;
 
 @Controller
 public class HomeController {
@@ -69,8 +66,18 @@ public class HomeController {
             }
         }
 
+        for(Order order : orders) {
+            order.setFulfillmentMap();
+            List<Event> events = new ArrayList<>();
+            events = shopify.eventTemplate().getLatestEventByOrderId(order.getId()).getEvents();
+            if (events != null && events.size() > 0) {
+                Event latestEvent = events.get(0);
+                order.setLatestEventMessage(latestEvent.getCreatedAt().substring(0, 10) + ": " + latestEvent
+                        .getMessage());
+            }
+        }
+
         model.addAttribute("orders", orders);
         return "order/index";
     }
-
 }

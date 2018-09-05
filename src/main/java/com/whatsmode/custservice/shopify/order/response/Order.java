@@ -1,6 +1,14 @@
 package com.whatsmode.custservice.shopify.order.response;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.util.StringUtils;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.whatsmode.custservice.shopify.common.Constants;
+import com.whatsmode.custservice.shopify.fulfillment.response.Fulfillment;
 
 public class Order {
     private long id;
@@ -28,6 +36,15 @@ public class Order {
 
     @JsonProperty(value = "order_status_url")
     private String orderStatusUrl;
+
+    private List<Fulfillment> fulfillments;
+
+    private String latestEventMessage;
+
+    private Map<String, String> fulfillmentMap;
+
+    @JsonProperty(value = "line_items")
+    private List<LineItem> lineItems;
 
     public long getId() {
         return id;
@@ -109,19 +126,65 @@ public class Order {
         this.orderStatusUrl = orderStatusUrl;
     }
 
+    public List<Fulfillment> getFulfillments() {
+        return fulfillments;
+    }
+
+    public void setFulfillments(List<Fulfillment> fulfillments) {
+        this.fulfillments = fulfillments;
+    }
+
+    public Map<String, String> getFulfillmentMap() {
+        return fulfillmentMap;
+    }
+
+    public String getLatestEventMessage() {
+        return latestEventMessage;
+    }
+
+    public void setLatestEventMessage(String latestEventMessage) {
+        this.latestEventMessage = latestEventMessage;
+    }
+
+    public void setFulfillmentMap() {
+        if (fulfillments != null && fulfillments.size() > 0) {
+            Map<String, String> map = new HashMap<>();
+            for (Fulfillment fulfillment : fulfillments) {
+                if(StringUtils.isEmpty(fulfillment.getTrackingUrl())) {
+                    map.put(fulfillment.getTrackingNumber(), Constants.DEFAULT_TRACKING_URL + fulfillment.getTrackingNumber());
+                } else {
+                    map.put(fulfillment.getTrackingNumber(), fulfillment.getTrackingUrl());
+                }
+            }
+            this.fulfillmentMap = map;
+        }
+
+    }
+
+    public List<LineItem> getLineItems() {
+        return lineItems;
+    }
+
+    public void setLineItems(List<LineItem> lineItems) {
+        this.lineItems = lineItems;
+    }
+
     @Override
     public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", name='" + name + '\'' +
-                ", note='" + note + '\'' +
-                ", orderNumber='" + orderNumber + '\'' +
-                ", financialStatus='" + financialStatus + '\'' +
-                ", fulfillmentStatus='" + fulfillmentStatus + '\'' +
-                ", createdAt='" + createdAt + '\'' +
-                ", updatedAt='" + updatedAt + '\'' +
-                ", orderStatusUrl='" + orderStatusUrl + '\'' +
-                '}';
+        return "{"
+                + "\"id\":" + id
+                + ", \"email\":\"" + email + "\""
+                + ", \"name\":\"" + name + "\""
+                + ", \"note\":\"" + note + "\""
+                + ", \"orderNumber\":\"" + orderNumber + "\""
+                + ", \"financialStatus\":\"" + financialStatus + "\""
+                + ", \"fulfillmentStatus\":\"" + fulfillmentStatus + "\""
+                + ", \"createdAt\":\"" + createdAt + "\""
+                + ", \"updatedAt\":\"" + updatedAt + "\""
+                + ", \"orderStatusUrl\":\"" + orderStatusUrl + "\""
+                + ", \"fulfillments\":" + fulfillments
+                + ", \"latestEventMessage\":\"" + latestEventMessage + "\""
+                + ", \"fulfillmentMap\":" + fulfillmentMap
+                + "}";
     }
 }

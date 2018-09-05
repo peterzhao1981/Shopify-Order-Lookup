@@ -36,18 +36,34 @@
                 <th>Fulfillment Status</th>
                 <th>Note</th>
                 <th>Order Detail</th>
+                <th>Tracking Url</th>
+                <th>Latest Event</th>
+                <!--<th>Product Detail</th>-->
             </tr>
             </thead>
             <tbody>
-            <tr th:each="order : ${orders}">
-                <td th:text="${order.name}">#41156789</td>
-                <td th:text="${order.createdAt}">2017-11-01</td>
-                <td th:text="${order.email}">foo@bar.com</td>
-                <td th:text="${order.financialStatus}">Paid</td>
-                <td th:text="${order.fulfillmentStatus}">Fulfilled</td>
-                <td th:text="${order.note}">Note</td>
-                <td><a th:href="${order.orderStatusUrl}" th:target="_blank">View Detail</a></td>
-            </tr>
+            <div th:each="order : ${orders}">
+                <tr>
+                    <td th:text="${order.name}">#41156789</td>
+                    <td th:text="${order.createdAt}">2017-11-01</td>
+                    <td th:text="${order.email}">foo@bar.com</td>
+                    <td th:text="${order.financialStatus}">Paid</td>
+                    <td th:text="${order.fulfillmentStatus}">Fulfilled</td>
+                    <td th:text="${order.note}">Note</td>
+                    <td><a th:href="${order.orderStatusUrl}" th:target="_blank">View Detail</a></td>
+                    <td>
+                        <div th:each="fulfillment : ${order.fulfillmentMap}">
+                            <a th:href="${fulfillment.value}" th:target="_blank" th:text="${fulfillment.key}"></a>
+                        </div>
+                    </td>
+                    <td><div th:text="${order.latestEventMessage}"></div></td>
+                </tr>
+                <div th:each="lineItem : ${order.lineItems}">
+                    <tr>
+                        <td colspan="9" th:text="'&emsp;&emsp;&emsp;' + ${lineItem.sku} + ': ' + ${lineItem.title}"></td>
+                    </tr>
+                </div>
+            </div>
             </tbody>
         </table>
     </section>

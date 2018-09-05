@@ -1,6 +1,5 @@
 package com.whatsmode.custservice.shopify.order.template;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
