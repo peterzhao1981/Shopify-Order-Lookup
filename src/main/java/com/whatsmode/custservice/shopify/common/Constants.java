@@ -2,7 +2,7 @@ package com.whatsmode.custservice.shopify.common;
 
 public class Constants {
 
-    //test
+    //test12345
     // Shopify api rate limit
     public static final Long SHOPIFY_API_RATE_LIMIT_MAX_RESULT_OJECTS = 250L;
     public static final Long SHOPIFY_API_DEFAULT_PAGE_RESULT_OJECTS = 50L;
