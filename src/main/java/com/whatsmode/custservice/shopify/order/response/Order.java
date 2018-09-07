@@ -17,6 +17,16 @@ public class Order {
 
     private String name;
 
+    public String getGateway() {
+        return gateway;
+    }
+
+    public void setGateway(String gateway) {
+        this.gateway = gateway;
+    }
+
+    private String gateway;
+
     private String note;
 
     @JsonProperty(value = "order_number")
@@ -69,6 +79,7 @@ public class Order {
     public void setName(String name) {
         this.name = name;
     }
+
 
     public String getNote() {
         return note;
@@ -175,6 +186,7 @@ public class Order {
                 + "\"id\":" + id
                 + ", \"email\":\"" + email + "\""
                 + ", \"name\":\"" + name + "\""
+                + ", \"gateway\":\"" + gateway + "\""
                 + ", \"note\":\"" + note + "\""
                 + ", \"orderNumber\":\"" + orderNumber + "\""
                 + ", \"financialStatus\":\"" + financialStatus + "\""

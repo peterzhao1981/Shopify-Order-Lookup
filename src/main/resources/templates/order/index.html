@@ -34,6 +34,7 @@
                 <th>Email</th>
                 <th>Payment Status</th>
                 <th>Fulfillment Status</th>
+                <th>Gateway</th>
                 <th>Note</th>
                 <th>Order Detail</th>
                 <th>Tracking Url</th>
@@ -49,6 +50,7 @@
                     <td th:text="${order.email}">foo@bar.com</td>
                     <td th:text="${order.financialStatus}">Paid</td>
                     <td th:text="${order.fulfillmentStatus}">Fulfilled</td>
+                    <td th:text="${order.gateway}">Gateway</td>
                     <td th:text="${order.note}">Note</td>
                     <td><a th:href="${order.orderStatusUrl}" th:target="_blank">View Detail</a></td>
                     <td>
